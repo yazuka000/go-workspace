@@ -14,6 +14,8 @@ type Person struct {
 }
 
 func main() {
+
+	// read json
 	myJson := `
 	[
 		{
@@ -32,6 +34,7 @@ func main() {
 
 	var unmarshalled []Person
 
+	// json.Unmarshalで、json形式のデータをGoの構造体に変換している
 	err := json.Unmarshal([]byte(myJson), &unmarshalled)
 	if err != nil {
 		log.Println("Error unmarshalling json", err)
@@ -58,6 +61,8 @@ func main() {
 
 	mySlice = append(mySlice, m2)
 
+	// json.Marshalで、Goの構造体のデータをjson形式に変換している
+	// json.MarshalIndentは、Marshalの機能に加えてインデントをつけることで見やすくできる
 	newJson, err := json.MarshalIndent(mySlice, "", "   ")
 	if err != nil {
 		log.Println("error marshalling", err)
