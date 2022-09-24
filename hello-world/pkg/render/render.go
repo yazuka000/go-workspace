@@ -9,8 +9,11 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
+	// get the template cache  from the app config
+
+
 	// create a template cache
-	tc, err := createTemplateCache()
+	tc, err := CreateTemplateCache()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,14 +36,9 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 		log.Println(err)
 	}
 
-	// parsedTemplate, _ := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl")
-	// err := parsedTemplate.Execute(w, nil)
-	// if err != nil {
-	// 	fmt.Println("error parsing template:", err)
-	// }
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	// myCache := make(map[string]*template.Template)
 	myCache := map[string]*template.Template{}
 
@@ -75,6 +73,12 @@ func createTemplateCache() (map[string]*template.Template, error) {
 
 	return myCache, nil
 }
+
+// parsedTemplate, _ := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl")
+// err := parsedTemplate.Execute(w, nil)
+// if err != nil {
+// 	fmt.Println("error parsing template:", err)
+// }
 
 // var tc = make(map[string]*template.Template)
 

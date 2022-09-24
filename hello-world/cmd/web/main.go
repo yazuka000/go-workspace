@@ -2,13 +2,25 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"myapp/pkg/config"
 	"myapp/pkg/handlers"
+	"myapp/pkg/render"
 	"net/http"
 )
 
 var portNumber = ":8080"
 
 func main() {
+	var app config.AppConfig
+
+	tc, err := render.CreateTemplateCache()
+	if err != nil {
+		log.Fatal("cannot create template cache")
+	}
+
+	app.TemplateCache = tc
+
 	http.HandleFunc("/", handlers.Home)
 	http.HandleFunc("/about", handlers.About)
 	// http.HandleFunc("/divide", Divide)
