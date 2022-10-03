@@ -16,6 +16,10 @@
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs4.min.css"
+    />
 
     <style>
       .my-footer {
@@ -88,7 +92,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
           <h1 class="mt-3">Search for Availability</h1>
 
           <form
@@ -98,7 +103,7 @@
             class="needs-validation"
           >
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
-            <div class="row">
+            <!-- <div class="row">
               <div class="col">
                 <div class="row" id="reservation-dates">
                   <div class="col-md-6">
@@ -129,8 +134,32 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
+            <div class="row">
+              <div class="col">
+                <div class="row" id="reservation-dates">
+                  <div class="col-md-6">
+                    <input
+                      required
+                      class="form-control"
+                      type="text"
+                      name="start"
+                      placeholder="Arrival"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                      required
+                      class="form-control"
+                      type="text"
+                      name="end"
+                      placeholder="Departure"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
             <hr />
 
             <button type="submit" class="btn btn-primary">
@@ -172,6 +201,7 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
     <script>
       console.log("I am printing from javascript");
 
@@ -210,6 +240,12 @@
             myEl.classList.add("redText");
           }
         });
+
+      const elem = document.getElementById("reservation-dates");
+      const rangePicker = new DateRangePicker(elem, {
+        // ...options
+        format: "yyyy-mm-dd",
+      });
     </script>
   </body>
 </html>
