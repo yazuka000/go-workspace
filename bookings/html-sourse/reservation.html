@@ -20,6 +20,11 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs4.min.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/notie/dist/notie.min.css"
+    />
 
     <style>
       .my-footer {
@@ -30,9 +35,10 @@
         color: white;
         font-size: 80%;
       }
-
-      .redText {
-        color: red;
+      
+      /* override styles here */
+      .notie-container {
+        box-shadow: none;
       }
     </style>
   </head>
@@ -202,6 +208,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+    <script src="https://unpkg.com/notie"></script>
+
     <script>
       console.log("I am printing from javascript");
 
@@ -232,13 +240,7 @@
       document
         .getElementById("colorButton")
         .addEventListener("click", function () {
-          let myEl = document.getElementById("myParagraph");
-
-          if (myEl.classList.contains("redText")) {
-            myEl.classList.remove("redText");
-          } else {
-            myEl.classList.add("redText");
-          }
+          notify("This is my message", "warning");
         });
 
       const elem = document.getElementById("reservation-dates");
@@ -246,6 +248,13 @@
         // ...options
         format: "yyyy-mm-dd",
       });
+
+      function notify(msg, msgType) {
+        notie.alert({
+          type: msgType,
+          text: msg,
+        });
+      }
     </script>
   </body>
 </html>
