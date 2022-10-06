@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-var functions = template.FuncMap{}
+// var functions = template.FuncMap{}
 
 var app *config.AppConfig
 
