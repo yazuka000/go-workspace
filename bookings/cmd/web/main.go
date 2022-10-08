@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/yazuka000/bookings/internal/config"
+	"github.com/yazuka000/bookings/internal/handlers"
+	"github.com/yazuka000/bookings/internal/render"
 	"log"
-	"github.com/yazuka000/bookings/pkg/config"
-	"github.com/yazuka000/bookings/pkg/handlers"
-	"github.com/yazuka000/bookings/pkg/render"
 	"net/http"
 	"time"
 

@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/yazuka000/bookings/pkg/config"
-	"github.com/yazuka000/bookings/pkg/handlers"
+	"github.com/yazuka000/bookings/internal/config"
+	"github.com/yazuka000/bookings/internal/handlers"
 	"net/http"
 )
 

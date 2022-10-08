@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/yazuka000/bookings/pkg/config"
-	"github.com/yazuka000/bookings/pkg/models"
-	"github.com/yazuka000/bookings/pkg/render"
+	"github.com/yazuka000/bookings/internal/config"
+	"github.com/yazuka000/bookings/internal/models"
+	"github.com/yazuka000/bookings/internal/render"
 )
 
 // Repo the repository used by handlers
