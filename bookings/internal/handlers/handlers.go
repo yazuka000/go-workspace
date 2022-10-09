@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/yazuka000/bookings/internal/config"
+	"github.com/yazuka000/bookings/internal/forms"
 	"github.com/yazuka000/bookings/internal/models"
 	"github.com/yazuka000/bookings/internal/render"
 )
@@ -53,6 +54,12 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 // Reservation renders the make a reservation page and displays form
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Forms: forms.New(nil),
+	})
+}
+
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
 }
 
