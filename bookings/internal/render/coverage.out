@@ -1,0 +1,25 @@
+mode: set
+github.com/yazuka000/bookings/internal/render/render.go:23.40,25.2 1 1
+github.com/yazuka000/bookings/internal/render/render.go:27.84,34.2 5 1
+github.com/yazuka000/bookings/internal/render/render.go:37.105,40.18 2 1
+github.com/yazuka000/bookings/internal/render/render.go:48.2,49.9 2 1
+github.com/yazuka000/bookings/internal/render/render.go:53.2,58.16 4 1
+github.com/yazuka000/bookings/internal/render/render.go:63.2,64.16 2 1
+github.com/yazuka000/bookings/internal/render/render.go:69.2,69.12 1 1
+github.com/yazuka000/bookings/internal/render/render.go:40.18,43.3 1 0
+github.com/yazuka000/bookings/internal/render/render.go:43.8,45.3 1 1
+github.com/yazuka000/bookings/internal/render/render.go:49.9,51.3 1 1
+github.com/yazuka000/bookings/internal/render/render.go:58.16,60.3 1 0
+github.com/yazuka000/bookings/internal/render/render.go:64.16,67.3 2 0
+github.com/yazuka000/bookings/internal/render/render.go:72.67,77.16 3 1
+github.com/yazuka000/bookings/internal/render/render.go:82.2,82.29 1 1
+github.com/yazuka000/bookings/internal/render/render.go:104.2,104.21 1 1
+github.com/yazuka000/bookings/internal/render/render.go:77.16,79.3 1 0
+github.com/yazuka000/bookings/internal/render/render.go:82.29,85.17 3 1
+github.com/yazuka000/bookings/internal/render/render.go:89.3,90.17 2 1
+github.com/yazuka000/bookings/internal/render/render.go:94.3,94.23 1 1
+github.com/yazuka000/bookings/internal/render/render.go:101.3,101.21 1 1
+github.com/yazuka000/bookings/internal/render/render.go:85.17,87.4 1 0
+github.com/yazuka000/bookings/internal/render/render.go:90.17,92.4 1 0
+github.com/yazuka000/bookings/internal/render/render.go:94.23,96.18 2 1
+github.com/yazuka000/bookings/internal/render/render.go:96.18,98.5 1 0
