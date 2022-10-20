@@ -21,10 +21,10 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: reservation; Type: TABLE; Schema: public; Owner: takahashikazuya
+-- Name: reservations; Type: TABLE; Schema: public; Owner: takahashikazuya
 --
 
-CREATE TABLE public.reservation (
+CREATE TABLE public.reservations (
     id integer NOT NULL,
     first_name character varying(255) DEFAULT ''::character varying NOT NULL,
     last_name character varying(255) DEFAULT ''::character varying NOT NULL,
@@ -38,13 +38,13 @@ CREATE TABLE public.reservation (
 );
 
 
-ALTER TABLE public.reservation OWNER TO takahashikazuya;
+ALTER TABLE public.reservations OWNER TO takahashikazuya;
 
 --
--- Name: reservation_id_seq; Type: SEQUENCE; Schema: public; Owner: takahashikazuya
+-- Name: reservations_id_seq; Type: SEQUENCE; Schema: public; Owner: takahashikazuya
 --
 
-CREATE SEQUENCE public.reservation_id_seq
+CREATE SEQUENCE public.reservations_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -53,13 +53,13 @@ CREATE SEQUENCE public.reservation_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.reservation_id_seq OWNER TO takahashikazuya;
+ALTER TABLE public.reservations_id_seq OWNER TO takahashikazuya;
 
 --
--- Name: reservation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: takahashikazuya
+-- Name: reservations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: takahashikazuya
 --
 
-ALTER SEQUENCE public.reservation_id_seq OWNED BY public.reservation.id;
+ALTER SEQUENCE public.reservations_id_seq OWNED BY public.reservations.id;
 
 
 --
@@ -226,10 +226,10 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: reservation id; Type: DEFAULT; Schema: public; Owner: takahashikazuya
+-- Name: reservations id; Type: DEFAULT; Schema: public; Owner: takahashikazuya
 --
 
-ALTER TABLE ONLY public.reservation ALTER COLUMN id SET DEFAULT nextval('public.reservation_id_seq'::regclass);
+ALTER TABLE ONLY public.reservations ALTER COLUMN id SET DEFAULT nextval('public.reservations_id_seq'::regclass);
 
 
 --
@@ -261,11 +261,11 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Name: reservation reservation_pkey; Type: CONSTRAINT; Schema: public; Owner: takahashikazuya
+-- Name: reservations reservations_pkey; Type: CONSTRAINT; Schema: public; Owner: takahashikazuya
 --
 
-ALTER TABLE ONLY public.reservation
-    ADD CONSTRAINT reservation_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.reservations
+    ADD CONSTRAINT reservations_pkey PRIMARY KEY (id);
 
 
 --
@@ -305,6 +305,14 @@ ALTER TABLE ONLY public.users
 --
 
 CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USING btree (version);
+
+
+--
+-- Name: reservations reservations_rooms_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: takahashikazuya
+--
+
+ALTER TABLE ONLY public.reservations
+    ADD CONSTRAINT reservations_rooms_id_fk FOREIGN KEY (room_id) REFERENCES public.rooms(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
