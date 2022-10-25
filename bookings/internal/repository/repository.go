@@ -1,6 +1,10 @@
 package repository
 
-import "github.com/yazuka000/bookings/internal/models"
+import (
+	"time"
+
+	"github.com/yazuka000/bookings/internal/models"
+)
 
 type DatabaseRepo interface {
 	AllUsers() bool
@@ -8,4 +12,6 @@ type DatabaseRepo interface {
 	InsertReservation(res models.Reservation) (int, error)
 
 	InsertRoomRestriction(r models.RoomRestriction) error
+
+	SearchAvailabilityByDates(start, end time.Time, roomId int) (bool, error)
 }
