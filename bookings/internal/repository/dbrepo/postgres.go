@@ -74,13 +74,17 @@ func (m *postgresDBRepo) SearchAvailabilityByDatesByRoomId(start, end time.Time,
 
 	var numRows int
 
-	query := `select count(id)
-	from room_restrictions
+	query := `
+	select
+		count(id)
+	from
+		room_restrictions
 	where
 		room_id = $1
 		and $2 < end_date and $3 > start_date;`
 
-	row := m.DB.QueryRowContext(ctx, query, start, end)
+	// QueryRowContextの引数query以降は、queryに使う$の指定数だけ引数を、その$の順番で追加する必要がある
+	row := m.DB.QueryRowContext(ctx, query, roomId, start, end)
 	err := row.Scan(&numRows)
 	if err != nil {
 		return false, err
@@ -100,8 +104,11 @@ func (m *postgresDBRepo) SearchAvailabilityForAllRooms(start, end time.Time) ([]
 
 	var rooms []models.Room
 
-	query := `select r.id, r.room_name
-	from rooms r
+	query := `
+	select
+		r.id, r.room_name
+	from
+		rooms r
 	where r.id
 		not in (select rr.room_id
 		from room_restrictions rr
