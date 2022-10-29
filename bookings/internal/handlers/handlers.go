@@ -274,7 +274,7 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
 		helpers.ServerError(w, err)
-		return
+		// return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
