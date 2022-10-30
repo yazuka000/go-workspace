@@ -35,7 +35,7 @@
       <button
         id="check-availability-button"
         class="btn btn-success"
-        onclick="FormFromRoom()"
+        onclick="FormFromRoom(2, {{.CSRFToken}})"
       >
         Check Availability
       </button>
@@ -45,7 +45,5 @@
 {{ end }}
 
 {{define "js"}}
-<!-- <script>
-  document.getElementById("check-availability-button").onclick(FormFromRoom());
-</script> -->
+
 {{ end }}
