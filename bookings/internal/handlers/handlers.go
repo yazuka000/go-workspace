@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -364,7 +365,11 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
 	roomId, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
-		helpers.ServerError(w, err)
+		// helpers.ServerError(w, err)
+		log.Println(err)
+		m.App.Session.Put(r.Context(), "error", "missing url parameter")
+		http.Redirect(w, r, "/make-reservation", http.StatusTemporaryRedirect)
+		return
 	}
 
 	res, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
