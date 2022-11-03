@@ -226,15 +226,18 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	startDate, err := time.Parse(layout, start)
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
 	endDate, err := time.Parse(layout, end)
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
 
 	rooms, err := m.DB.SearchAvailabilityForAllRooms(startDate, endDate)
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
 
 	for _, i := range rooms {
