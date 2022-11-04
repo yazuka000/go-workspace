@@ -304,7 +304,6 @@ func TestNewRepo(t *testing.T) {
 	}
 }
 
-// not pass
 func TestRepository_PostAvailability(t *testing.T) {
 	// first case -- rooms are not available
 
@@ -364,7 +363,7 @@ func TestRepository_PostAvailability(t *testing.T) {
 	// make request to our handler
 	handler.ServeHTTP(rr, req)
 
-	// since we have no rooms available, we expect to get status http.StatusSeeOther
+	// since we have no rooms available, we expect to get status http.StatusOK
 	if rr.Code != http.StatusOK {
 		t.Errorf("Post Availability when rooms are available gave wrong status code: got %d, wanted %d", rr.Code, http.StatusOK)
 	}
@@ -456,6 +455,7 @@ func TestRepository_PostAvailability(t *testing.T) {
 	}
 
 	// sixth case -- database query fails
+
 	// this time, we specify a start date of 2060-01-01, which will cause
 	// our testdb repo to return an error
 
@@ -473,11 +473,11 @@ func TestRepository_PostAvailability(t *testing.T) {
 	// set request header
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	// make our handler a http.HandlerFunc
-	handler = http.HandlerFunc(Repo.PostAvailability)
-
 	// get response recorder
 	rr = httptest.NewRecorder()
+
+	// make our handler a http.HandlerFunc
+	handler = http.HandlerFunc(Repo.PostAvailability)
 
 	// make request to our handler
 	handler.ServeHTTP(rr, req)
@@ -549,7 +549,7 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	// make our handler a http.HandlerFunc
-	handler = http.HandlerFunc(Repo.PostAvailability)
+	handler = http.HandlerFunc(Repo.AvailabilityJSON)
 
 	// get response recorder
 	rr = httptest.NewRecorder()
@@ -560,6 +560,7 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	// this time we want to parse JSON and get the expected response
 	err = json.Unmarshal(rr.Body.Bytes(), &j)
 	if err != nil {
+		log.Println(err)
 		t.Error("failed to parse json")
 	}
 
@@ -581,7 +582,7 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	// make our handler a http.HandlerFunc
-	handler = http.HandlerFunc(Repo.PostAvailability)
+	handler = http.HandlerFunc(Repo.AvailabilityJSON)
 
 	// get response recorder
 	rr = httptest.NewRecorder()
@@ -592,6 +593,7 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	// this time we want to parse JSON and get the expected response
 	err = json.Unmarshal(rr.Body.Bytes(), &j)
 	if err != nil {
+		log.Println(err)
 		t.Error("failed to parse json")
 	}
 
@@ -618,7 +620,7 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	// make our handler a http.HandlerFunc
-	handler = http.HandlerFunc(Repo.PostAvailability)
+	handler = http.HandlerFunc(Repo.AvailabilityJSON)
 
 	// get response recorder
 	rr = httptest.NewRecorder()
@@ -629,11 +631,17 @@ func TestRepository_AvailabilityJson(t *testing.T) {
 	// this time we want to parse JSON and get the expected response
 	err = json.Unmarshal(rr.Body.Bytes(), &j)
 	if err != nil {
+		log.Println(err)
 		t.Error("failed to parse json")
 	}
 
 	// since we specified a start date < 2049-12-31, we expect availability
+	// if j.OK || j.Message != "Error querying database" {
+	// 	t.Error("Got availability when simulating database error")
+	// }
+
 	if j.OK || j.Message != "Error querying database" {
+		log.Println(j)
 		t.Error("Got availability when simulating database error")
 	}
 }
