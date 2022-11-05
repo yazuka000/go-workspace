@@ -2,16 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/yazuka000/bookings/internal/config"
 	"github.com/yazuka000/bookings/internal/driver"
 	"github.com/yazuka000/bookings/internal/forms"
-	"github.com/yazuka000/bookings/internal/helpers"
 	"github.com/yazuka000/bookings/internal/models"
 	"github.com/yazuka000/bookings/internal/render"
 	"github.com/yazuka000/bookings/internal/repository"
@@ -352,7 +350,7 @@ func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		m.App.ErrorLog.Println("can't get error from session")
+		// m.App.ErrorLog.Println("can't get error from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
@@ -377,18 +375,30 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 
 // ChooseRoom displays list of available rooms
 func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
-	roomId, err := strconv.Atoi(chi.URLParam(r, "id"))
+	// roomId, err := strconv.Atoi(chi.URLParam(r, "id"))
+	// if err != nil {
+	// 	// helpers.ServerError(w, err)
+	// 	log.Println(err)
+	// 	m.App.Session.Put(r.Context(), "error", "missing url parameter")
+	// 	http.Redirect(w, r, "/make-reservation", http.StatusTemporaryRedirect)
+	// 	return
+	// }
+
+	// changed to this, so we can test it more easily
+	// split the URL up by /, and grab the 3rd element
+	exploded := strings.Split(r.RequestURI, "/")
+	roomId, err := strconv.Atoi(exploded[2])
 	if err != nil {
-		// helpers.ServerError(w, err)
-		log.Println(err)
 		m.App.Session.Put(r.Context(), "error", "missing url parameter")
-		http.Redirect(w, r, "/make-reservation", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
 	res, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		helpers.ServerError(w, err)
+		m.App.Session.Put(r.Context(), "error", "can't get reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
 	}
 
 	res.RoomId = roomId

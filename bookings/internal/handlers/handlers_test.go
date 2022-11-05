@@ -488,7 +488,6 @@ func TestRepository_PostAvailability(t *testing.T) {
 	}
 }
 
-// not pass
 func TestRepository_AvailabilityJson(t *testing.T) {
 	// first case -- rooms are not available
 
@@ -689,6 +688,7 @@ func TestRepository_ReservationSummary(t *testing.T) {
 	}
 }
 
+// not pass
 func TestRepository_ChooseRoom(t *testing.T) {
 	// first case -- reservation in session
 
@@ -715,7 +715,7 @@ func TestRepository_ChooseRoom(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	if rr.Code != http.StatusTemporaryRedirect {
+	if rr.Code != http.StatusSeeOther {
 		t.Errorf("ChooseRoom handler returned wrong response code: got %d, wanted %d", rr.Code, http.StatusTemporaryRedirect)
 	}
 
@@ -754,7 +754,6 @@ func TestRepository_ChooseRoom(t *testing.T) {
 	}
 }
 
-// not pass
 func TestRepository_BookRoom(t *testing.T) {
 	// first case -- database works
 
