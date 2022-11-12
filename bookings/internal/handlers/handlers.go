@@ -518,9 +518,13 @@ func (m *Repository) PostShowLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 // Logout logs a user out
-func (m *Repository) Logout (w http.ResponseWriter, r *http.Request) {
+func (m *Repository) Logout(w http.ResponseWriter, r *http.Request) {
 	_ = m.App.Session.Destroy(r.Context())
 	_ = m.App.Session.RenewToken(r.Context())
 
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
+}
+
+func (m *Repository) AdminDashBoard(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-dashboard.page.tmpl", &models.TemplateData{})
 }
