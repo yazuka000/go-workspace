@@ -21,6 +21,7 @@ func (m *postgresDBRepo) InsertReservation(res models.Reservation) (int, error) 
 
 	var newId int
 
+	// summaryでroomNameが表示されない原因である可能性が高い
 	stmt := `insert into reservations
 					(first_name, last_name, email, phone, start_date, end_date, room_id, created_at, updated_at)
 					values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id`
@@ -145,6 +146,7 @@ func (m *postgresDBRepo) GetRoomById(id int) (models.Room, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
+	// summaryにroomNameが表示されない原因の可能性あり
 	var room models.Room
 
 	query := `select id, room_name, created_at, updated_at from rooms where id = $1`

@@ -15,7 +15,7 @@ import (
 	"github.com/yazuka000/bookings/internal/models"
 )
 
-var functions = template.FuncMap{
+var functionMap = template.FuncMap{
 	"humanDate": HumanDate,
 }
 
@@ -95,7 +95,9 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	// range through all files ending with *.page.tmpl
 	for _, page := range pages {
 		name := filepath.Base(page)
-		ts, err := template.New(name).ParseFiles(page)
+		
+		// Funcs(funcMapを定義した変数)を書かないと、FuncMapの関数を呼び出せない
+		ts, err := template.New(name).Funcs(functionMap).ParseFiles(page)
 		if err != nil {
 			return myCache, err
 		}
