@@ -45,6 +45,7 @@ type Reservation struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Room      Room
+	Processed int
 }
 
 // RoomRestriction is the room restrictions model
@@ -64,9 +65,9 @@ type RoomRestriction struct {
 
 // MailData holds an email message
 type MailData struct {
-	To      string
-	From    string
-	Subject string
-	Content string
+	To       string
+	From     string
+	Subject  string
+	Content  string
 	Template string
 }
