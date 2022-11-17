@@ -167,7 +167,7 @@ func (m *postgresDBRepo) GetRoomById(id int) (models.Room, error) {
 }
 
 // GetUserById returns a user by id
-func (m *postgresDBRepo) GetUserById(id int)(models.User, error)  {
+func (m *postgresDBRepo) GetUserById(id int) (models.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -196,7 +196,7 @@ func (m *postgresDBRepo) GetUserById(id int)(models.User, error)  {
 }
 
 // UpdateUser updates a user in the database
-func (m *postgresDBRepo) UpdateUser(u models.User) error  {
+func (m *postgresDBRepo) UpdateUser(u models.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -220,7 +220,7 @@ func (m *postgresDBRepo) UpdateUser(u models.User) error  {
 }
 
 // Authenticate authenticates a user
-func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, error){
+func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -234,9 +234,9 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(testPassword))
-	if err == bcrypt.ErrMismatchedHashAndPassword{
+	if err == bcrypt.ErrMismatchedHashAndPassword {
 		return 0, "", errors.New("incorrect password")
-	}else if err != nil {
+	} else if err != nil {
 		return 0, "", err
 	}
 
@@ -244,7 +244,7 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 }
 
 // AllReservations returns a slice of all reservations
-func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error)  {
+func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -270,7 +270,7 @@ func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error)  {
 	}
 	defer rows.Close()
 
-	for rows.Next(){
+	for rows.Next() {
 		var i models.Reservation
 		err := rows.Scan(
 			&i.Id,
@@ -301,9 +301,8 @@ func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error)  {
 	return reservations, nil
 }
 
-
 // AllNewReservations returns a slice of all reservations
-func (m *postgresDBRepo) AllNewReservations() ([]models.Reservation, error)  {
+func (m *postgresDBRepo) AllNewReservations() ([]models.Reservation, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -331,7 +330,7 @@ func (m *postgresDBRepo) AllNewReservations() ([]models.Reservation, error)  {
 	}
 	defer rows.Close()
 
-	for rows.Next(){
+	for rows.Next() {
 		var i models.Reservation
 		err := rows.Scan(
 			&i.Id,
@@ -359,4 +358,46 @@ func (m *postgresDBRepo) AllNewReservations() ([]models.Reservation, error)  {
 	}
 
 	return reservations, nil
+}
+
+// GetReservationById returns one reservation by Id
+func (m *postgresDBRepo) GetReservationById(id int) (models.Reservation, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var res models.Reservation
+
+	query := `
+		select r.id, r.first_name, r.last_name, r.email, r.phone,
+			r.start_date, r.end_date, r.room_id, r.created_at, r.updated_at,
+			r.processed, rm.id, rm.room_name
+		from
+			reservations r
+		left join
+			rooms rm on (r.room_id = rm.id)
+		where r.id = $1
+	`
+
+	row := m.DB.QueryRowContext(ctx, query, id)
+	err := row.Scan(
+		&res.Id,
+		&res.FirstName,
+		&res.LastName,
+		&res.Email,
+		&res.Phone,
+		&res.StartDate,
+		&res.EndDate,
+		&res.RoomId,
+		&res.CreatedAt,
+		&res.UpdatedAt,
+		&res.Processed,
+		&res.Room.Id,
+		&res.Room.RoomName,
+	)
+
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
 }
