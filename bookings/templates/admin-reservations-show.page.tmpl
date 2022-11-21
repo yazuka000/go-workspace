@@ -69,18 +69,21 @@ Reservation
     </div>
 
     <hr />
-    <div class="justify-content-start">
-      <input type="submit" class="btn btn-primary" value="Save" />
-      <a href="/admin/reservations-{{$src}}" class="btn btn-warning">Cancel</a>
-      <a href="#!" class="btn btn-info" onclick="processRes({{$res.Id}})">Mark as Processed</a>
-
-      <div class="ml-auto">
-        <a href="#!" class="btn btn-danger" onclick="deleteRes({{$res.Id}})">Delete</a>
+    <div class="row">
+      <div class="float-start">
+        <input type="submit" class="btn btn-primary" value="Save" />
+        <a href="/admin/reservations-{{$src}}" class="btn btn-warning">Cancel</a>
+        <a href="#!" class="btn btn-info" onclick="processRes({{$res.Id}})">Mark as Processed</a>
+        <div class="float-end">
+          <a href="#!" class="btn btn-danger" onclick="deleteRes({{$res.Id}})">Delete</a>
+        </div>
       </div>
+      <div class="clearfix"></div>
     </div>
 
-    <!-- <div class="clearfix"></div> -->
   </form>
+
+
 </div>
 {{ end }}
 
