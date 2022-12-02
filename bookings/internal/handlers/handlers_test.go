@@ -40,7 +40,8 @@ var theTests = []struct {
 	{"new res", "/admin/reservations-new", "GET", http.StatusOK},
 	{"all res", "/admin/reservations-all", "GET", http.StatusOK},
 	{"show res", "/admin/reservations/new/1/show", "GET", http.StatusOK},
-
+	{"show res cal", "/admin/reservations-calendar", "GET", http.StatusOK},
+	{"show res cal with params", "/admin/reservations-calendar?y=2020&m=1", "GET", http.StatusOK},
 }
 
 func TestHandlers(t *testing.T) {
